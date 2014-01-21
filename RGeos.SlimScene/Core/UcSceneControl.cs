@@ -13,7 +13,7 @@ namespace RGeos.SlimScene.Core
     {
         private Device m_Device3d;
         private PresentParameters m_presentParams;
-      
+
         private Thread m_WorkerThread;
         private bool m_WorkerThreadRunning;
         private System.Timers.Timer m_FpsTimer = new System.Timers.Timer(250);
@@ -39,11 +39,11 @@ namespace RGeos.SlimScene.Core
         public DrawArgs DrawArgs
         {
             get { return drawArgs; }
-        }      
+        }
         public BoundingBox BoundingBox;
         // Rotation/Zoom/Pan
         private System.Object matrixLock = new System.Object();
-        private Arcball arcBall = new Arcball(640.0f, 480.0f);
+        private Arcball arcBall = new Arcball(640, 480);
         private Matrix matrix = Matrix.Identity;
         private MatrixArcBall LastTransformation = new MatrixArcBall();
         private MatrixArcBall ThisTransformation = new MatrixArcBall();
@@ -72,8 +72,9 @@ namespace RGeos.SlimScene.Core
             LastTransformation.SetIdentity(); // Reset Rotation
             ThisTransformation.SetIdentity(); // Reset Rotation
             matrix = ThisTransformation.get_Renamed();
-            arcBall = new Arcball(Width, Height);
-            arcBall.SetBounds(Width, Height);
+           // matrix.Invert();
+            //arcBall = new Arcball(Width, Height);
+            //arcBall.SetBounds(Width, Height);
         }
 
         private void InitializeGraphics()
@@ -111,10 +112,11 @@ namespace RGeos.SlimScene.Core
         private void OnDeviceReset()
         {
             // Can we use anisotropic texture minify filter?
-            if (base.Height<=0 ||base.Width<=0)
+            if (base.Height <= 0 || base.Width <= 0)
             {
                 return;
             }
+
             PresentParameters presentParameters = this.m_presentParams.Clone();
             presentParameters.BackBufferHeight = this.Height;
             presentParameters.BackBufferWidth = this.Width;
@@ -149,12 +151,16 @@ namespace RGeos.SlimScene.Core
             //Clockwise不显示按顺时针绘制的三角形
             m_Device3d.SetRenderState(RenderState.CullMode, Cull.None);
             m_Device3d.SetRenderState(RenderState.Lighting, false);
-            m_Device3d.SetRenderState(RenderState.Ambient,  Color.FromArgb(0x40, 0x40, 0x40).ToArgb());
+            m_Device3d.SetRenderState(RenderState.Ambient, Color.FromArgb(0x40, 0x40, 0x40).ToArgb());
 
             m_Device3d.SetRenderState(RenderState.ZEnable, true);
             m_Device3d.SetRenderState(RenderState.AlphaBlendEnable, true);
             m_Device3d.SetRenderState(RenderState.SourceBlend, Blend.SourceAlpha);
             m_Device3d.SetRenderState(RenderState.DestinationBlend, Blend.InverseSourceAlpha);
+            if (arcBall != null)
+            {
+                arcBall.SetBounds(base.Width, base.Height);
+            }
         }
 
         protected void AttemptRecovery()
@@ -169,7 +175,7 @@ namespace RGeos.SlimScene.Core
                 {
                     if (exception.ResultCode == ResultCode.DeviceNotReset)
                     {
-                       // m_Device3d.Reset(m_presentParams);
+                        // m_Device3d.Reset(m_presentParams);
                         OnDeviceReset();
                     }
                 }
@@ -215,12 +221,13 @@ namespace RGeos.SlimScene.Core
                 return;
             }
             if (drawArgs != null)
-            {             
+            {
                 //m_Device3d.Reset(m_presentParams);
                 //m_Device3d.Viewport = new Viewport(Left, Top, Width, this.Height);
                 OnDeviceReset();//窗体大小改变时，重置设备
                 this.drawArgs.screenHeight = this.Height;
                 this.drawArgs.screenWidth = this.Width;
+
             }
             base.OnResize(e);
         }
@@ -255,6 +262,7 @@ namespace RGeos.SlimScene.Core
                 lock (matrixLock)
                 {
                     matrix = ThisTransformation.get_Renamed();
+                    //matrix.Invert();
                 }
                 Matrix world = m_Device3d.GetTransform(TransformState.World);
                 m_Device3d.SetTransform(TransformState.World, matrix); //保证实现A状态-B状态-重置为A状态          
@@ -318,17 +326,17 @@ namespace RGeos.SlimScene.Core
         private void CameraViewSetup()
         {
             float fov = (float)Math.PI / 4;
-            //float aspectRatio = (float)m_Device3d.Viewport.Width / m_Device3d.Viewport.Height;
-            float aspectRatio = (float)Width /Height;
+            float aspectRatio = (float)m_Device3d.Viewport.Width / m_Device3d.Viewport.Height;
+            //float aspectRatio = (float)Width /Height;
             Matrix projection = Matrix.PerspectiveFovLH(fov, aspectRatio, mapWidth == 0 ? 0.30f : (float)(mapWidth / 10), mapWidth == 0 ? 500f : (float)(mapWidth * 3));
             m_Device3d.SetTransform(TransformState.Projection, projection);
             m_Device3d.SetTransform(TransformState.View, Matrix.LookAtLH(new Vector3(0, 30, -30), new Vector3(0, 0, 0), new Vector3(0, 1.0f, 0)));
 
             BoundingBox bound = new BoundingBox(new Vector3(-100, -100, -100), new Vector3(100, 100, 100));
             Vector3 centre = (bound.Maximum + bound.Minimum) / 2;
-            Vector3 position = centre + new Vector3(0, 130, -230);
-            Matrix matrix = Matrix.LookAtLH(position, centre, new Vector3(0, 1.0f, 0));
-            m_Device3d.SetTransform(TransformState.View, matrix);
+            Vector3 position = centre + new Vector3(0, 150, -250);
+            Matrix ViewMatrix = Matrix.LookAtLH(position, centre, new Vector3(0, 1.0f, 0));
+            m_Device3d.SetTransform(TransformState.View, ViewMatrix);
 
 
             // this.drawArgs.WorldCamera = new Camera();
@@ -459,7 +467,7 @@ namespace RGeos.SlimScene.Core
         {
             Quat4f ThisQuat = new Quat4f();
 
-            arcBall.drag(MousePt, ref ThisQuat); // Update End Vector And Get Rotation As Quaternion
+            arcBall.drag(MousePt, ThisQuat); // Update End Vector And Get Rotation As Quaternion
 
             lock (matrixLock)
             {
@@ -475,8 +483,8 @@ namespace RGeos.SlimScene.Core
                 }
                 else if (isRightDrag) //pan
                 {
-                    float x = (float)(MousePt.X - mouseStartDrag.X) / (float)this.Width;
-                    float y = (float)(MousePt.Y - mouseStartDrag.Y) / (float)this.Height;
+                    float x = (float)(MousePt.X - mouseStartDrag.X) / (float)this.Width * 250;
+                    float y = -(float)(MousePt.Y - mouseStartDrag.Y) / (float)this.Height * 250;
                     float z = 0.0f;
 
                     ThisTransformation.Pan = new Vector3(x, y, z);
