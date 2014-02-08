@@ -20,6 +20,7 @@ namespace RGeos.SlimScene.Test
         }
         protected override void OnLoad(EventArgs e)
         {
+            this.Text = "第一个程序";
             mSceneControl.Dock = DockStyle.Fill;
             Earth earth = new Earth("地球", 100, 36, 36);
             earth.IsOn = true;

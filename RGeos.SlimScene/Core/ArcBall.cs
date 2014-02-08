@@ -7,6 +7,10 @@ using System.Drawing;
 
 namespace RGeos.SlimScene.Core
 {
+    /*
+     * This code is a part of NeHe tutorials and was converted from C++ into C#. 
+     * Matrix/Vector manipulations have been updated.
+     */
     public class Arcball
     {
         private const float Epsilon = 1.0e-5f;
@@ -23,7 +27,7 @@ namespace RGeos.SlimScene.Core
             SetBounds(NewWidth, NewHeight);
         }
 
-        private void MapToSphere(Point point, ref Vector3 vector)
+        private void mapToSphere(Point point, ref Vector3 vector)
         {
             PointF tempPoint = new PointF(point.X, point.Y);
 
@@ -58,21 +62,21 @@ namespace RGeos.SlimScene.Core
         public void SetBounds(float NewWidth, float NewHeight)
         {
             //Set adjustment factor for width/height
-            adjustWidth = 1.0f / ((NewWidth - 1.0f) * 1f);
-            adjustHeight = 1.0f / ((NewHeight - 1.0f) * 1f);
+            adjustWidth = 1.0f / ((NewWidth - 1.0f) * 0.5f);
+            adjustHeight = 1.0f / ((NewHeight - 1.0f) * 0.5f);
         }
 
         //Mouse down
         public virtual void click(Point NewPt)
         {
-            MapToSphere(NewPt, ref StVec);
+            mapToSphere(NewPt, ref this.StVec);
         }
 
         //Mouse drag, calculate rotation
-        public void drag(Point NewPt, ref Quat4f NewRot)
+        public void drag(Point NewPt, Quat4f NewRot)
         {
             //Map the point to the sphere
-            this.MapToSphere(NewPt, ref EnVec);
+            this.mapToSphere(NewPt, ref EnVec);
 
             //Return the quaternion equivalent to the rotation
             if (NewRot != null)
@@ -80,7 +84,8 @@ namespace RGeos.SlimScene.Core
                 Vector3 Perp = new Vector3();
 
                 //Compute the vector perpendicular to the begin and end vectors
-                Perp = Vector3.Cross(StVec, EnVec);
+                //计算垂直向量
+                Perp = Vector3.Cross(EnVec, StVec);
 
                 //Compute the length of the perpendicular vector
                 if (Perp.Length() > Epsilon)

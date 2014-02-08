@@ -24,7 +24,7 @@ namespace RGeos.SlimScene.Core
         public Camera()
         {
             mCameraType = CameraType.AIRCRAFT;
-            mPosition = new Vector3(0.0f, 0.0f, -30.0f);//注意默认位置，现在对了。
+            mPosition = new Vector3(0.0f, 0.0f, -250.0f);//注意默认位置，现在对了。
             mRight = new Vector3(0.0f, 1.0f, 0.0f);
             mUp = new Vector3(0.0f, 1.0f, 0.0f);
             mLook = new Vector3(0.0f, 0.0f, 10.0f);

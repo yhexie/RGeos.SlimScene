@@ -54,6 +54,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Camera\Camera.cs" />
+    <Compile Include="Camera\PerspectiveCamera.cs" />
+    <Compile Include="Camera\Quaternion4d.cs" />
+    <Compile Include="Controls\UcSceneControl2.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\UcSceneControl2.Designer.cs">
+      <DependentUpon>UcSceneControl2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\UcSceneControlEx.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\UcSceneControlEx.Designer.cs">
+      <DependentUpon>UcSceneControlEx.cs</DependentUpon>
+    </Compile>
     <Compile Include="Core\ArcBall.cs" />
     <Compile Include="Core\Cache.cs" />
     <Compile Include="Core\Camera.cs" />
@@ -72,14 +87,20 @@
     <Compile Include="RawType\PositionColored.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\Scene.cs" />
-    <Compile Include="Core\UcSceneControl.cs">
+    <Compile Include="Controls\UcSceneControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Core\UcSceneControl.Designer.cs">
+    <Compile Include="Controls\UcSceneControl.Designer.cs">
       <DependentUpon>UcSceneControl.cs</DependentUpon>
     </Compile>
     <Compile Include="RawType\PositionNormal.cs" />
     <Compile Include="RawType\PositionTextured.cs" />
+    <EmbeddedResource Include="Controls\UcSceneControl2.resx">
+      <DependentUpon>UcSceneControl2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\UcSceneControlEx.resx">
+      <DependentUpon>UcSceneControlEx.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -90,7 +111,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Core\UcSceneControl.resx">
+    <EmbeddedResource Include="Controls\UcSceneControl.resx">
       <DependentUpon>UcSceneControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
