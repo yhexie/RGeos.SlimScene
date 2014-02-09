@@ -302,11 +302,10 @@ namespace RGeos.SlimScene.Controls
             }
         }
 
-        RCamera mCamera;
+        RCamera mCamera = null;
         // 建立相机
         private void CameraViewSetup()
         {
-
             mCamera.AspectRatio = (float)Width / Height;
             mCamera.Project(m_Device3d);
         }
@@ -397,8 +396,6 @@ namespace RGeos.SlimScene.Controls
                     float deltaXNormalized = (float)deltaX / drawArgs.screenWidth;
                     float deltaYNormalized = (float)deltaY / drawArgs.screenHeight;
 
-
-
                     if (mouseDownStartPosition == Point.Empty)
                         return;
 
@@ -421,7 +418,7 @@ namespace RGeos.SlimScene.Controls
                         PerspectiveCamera mPersCamera = mCamera as PerspectiveCamera;
                         mPersCamera.RotateRay(0.01f * deltaX, new Vector3(0f, 0f, 0f), new Vector3(view.M12, view.M22, view.M32));
                         mPersCamera.RotateRay(0.01f * deltaY, new Vector3(0f, 0f, 0f), new Vector3(view.M11, view.M21, view.M31));
-                        
+
                     }
                     else if (!isMouseLeftButtonDown && isMouseRightButtonDown)
                     {
@@ -444,8 +441,6 @@ namespace RGeos.SlimScene.Controls
                         CamPosition.Z += -moveFactor * (deltaX * currentView.M31 - deltaY * currentView.M32);
                         mPersCamera.Position = CamPosition;
                         mPersCamera.Target = CamTarget;
-
-                       
 
                     }
                     else if (isMouseLeftButtonDown && isMouseRightButtonDown)
@@ -495,11 +490,13 @@ namespace RGeos.SlimScene.Controls
                         isDoubleClick = false;
                         if (e.Button == MouseButtons.Left)
                         {
-                            drawArgs.WorldCamera.walk(10);
+                            PerspectiveCamera mPersCamera = mCamera as PerspectiveCamera;
+                            mPersCamera.Zoom(10);
                         }
                         else if (e.Button == MouseButtons.Right)
                         {
-                            drawArgs.WorldCamera.walk(-10);
+                            PerspectiveCamera mPersCamera = mCamera as PerspectiveCamera;
+                            mPersCamera.Zoom(-10);
                         }
                     }
                     else
@@ -563,14 +560,8 @@ namespace RGeos.SlimScene.Controls
 
         protected override void OnMouseWheel(MouseEventArgs e)
         {
-            if (e.Delta > 0)
-            {
-                drawArgs.WorldCamera.walk(3);
-            }
-            else
-            {
-                drawArgs.WorldCamera.walk(-3);
-            }
+            PerspectiveCamera mPersCamera = mCamera as PerspectiveCamera;
+            mPersCamera.Zoom(e.Delta);
             base.OnMouseWheel(e);
         }
     }

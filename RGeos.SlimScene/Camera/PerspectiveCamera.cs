@@ -99,7 +99,14 @@ namespace RGeos.SlimScene
 
             upVector = Vector3.TransformCoordinate(upVector, temp);
         }
-
+        public void Zoom(int Delta)
+        {
+            float scaleFactor = -(float)Delta * 1.0f;
+            // CamPosition.Subtract(CamTarget);
+            Vector3 look = Vector3.Subtract(Position, target);
+            look.Normalize();
+            Position += look * scaleFactor;
+        }
         /// <summary>
         /// The field of view. 
         /// </summary>
