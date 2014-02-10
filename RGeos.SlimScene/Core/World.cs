@@ -24,10 +24,19 @@ namespace RGeos.SlimScene.Core
             }
         }
 
+        Scene mScene;
+
+        public Scene Scene
+        {
+            get { return mScene; }
+            set { mScene = value; }
+        }
+
         public World(string str)
             : base(str)
         {
             this.mRenderableObjects = new RenderableObjectList(this.Name);
+            mScene = new Scene("地理渲染对象");
         }
 
         public override void Initialize(DrawArgs drawArgs)
@@ -38,6 +47,7 @@ namespace RGeos.SlimScene.Core
                     return;
 
                 this.RenderableObjects.Initialize(drawArgs);
+                mScene.Initialize(drawArgs);
             }
             catch (Exception caught)
             {
@@ -60,7 +70,10 @@ namespace RGeos.SlimScene.Core
             {
                 this.RenderableObjects.Update(drawArgs);
             }
-
+            if (Scene != null)
+            {
+                Scene.Update(drawArgs);
+            }
         }
 
         public override bool PerformSelectionAction(DrawArgs drawArgs)
@@ -94,7 +107,13 @@ namespace RGeos.SlimScene.Core
 
                 //绘制自定义渲染对象
                 Render(RenderableObjects, RenderPriority.Custom, drawArgs);
-                ShowPlanetAxis = true;
+
+                //Render(Scene, RenderPriority.TerrainMappedImages, drawArgs);
+                ////渲染Placenames
+                //Render(Scene, RenderPriority.Placenames, drawArgs);
+
+                Render(Scene, RenderPriority.Custom, drawArgs);
+
                 //绘制坐标轴
                 if (ShowPlanetAxis)
                     this.DrawAxis(drawArgs);
@@ -181,6 +200,6 @@ namespace RGeos.SlimScene.Core
 
         public bool ShowPlanetAxis { get; set; }
 
-       
+
     }
 }

@@ -120,7 +120,7 @@ namespace RGeos.SlimScene
         /// <summary>
         /// The far flip.
         /// </summary>
-        private float far = 500.0f;
+        private float far = 5000.0f;
 
 
     }

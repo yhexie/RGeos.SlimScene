@@ -63,7 +63,7 @@ namespace RGeos.SlimScene.Controls
 
             m_World = new World("世界");
             mCamera = new PerspectiveCamera();
-            mCamera.Position = new Vector3(0.0f, 0.0f, -300f);
+            mCamera.Position = new Vector3(300.0f, 300.0f, -300f);
 
         }
 

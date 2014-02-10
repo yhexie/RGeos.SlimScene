@@ -5,35 +5,33 @@ using System.Text;
 
 namespace RGeos.SlimScene.Core
 {
-    public class Scene : RenderableObject
+    public delegate void ItemAdded_Event(ILayer layer);
+    public delegate void ItemRemoved_Event(ILayer layer);
+    public class Scene : RenderableObjectList
     {
+        public ItemAdded_Event ItemAdded;
+        public ItemRemoved_Event ItemRemoved;
         public Scene(string name)
             : base(name)
         {
         }
-        public override void Initialize(DrawArgs drawArgs)
+        public void AddLayer(ILayer layer)
         {
-            throw new NotImplementedException();
+            RenderableObject obj = layer as RenderableObject;
+            m_children.Add(obj);
+            if (ItemAdded != null)
+            {
+                ItemAdded(layer);
+            }
         }
-
-        public override void Update(DrawArgs drawArgs)
+        public void RemoveLayer(ILayer layer)
         {
-            throw new NotImplementedException();
-        }
-
-        public override void Render(DrawArgs drawArgs)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Dispose()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool PerformSelectionAction(DrawArgs drawArgs)
-        {
-            throw new NotImplementedException();
+            RenderableObject obj = layer as RenderableObject;
+            m_children.Remove(obj);
+            if (ItemRemoved != null)
+            {
+                ItemRemoved(layer);
+            }
         }
     }
 }
