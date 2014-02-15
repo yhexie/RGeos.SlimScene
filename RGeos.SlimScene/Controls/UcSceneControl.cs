@@ -6,6 +6,7 @@ using System.Threading;
 using Utility;
 using System.Diagnostics;
 using SlimDX;
+using RGeos.SlimScene.Camera;
 
 namespace RGeos.SlimScene.Core
 {
@@ -67,7 +68,7 @@ namespace RGeos.SlimScene.Core
             drawArgs = new DrawArgs(m_Device3d, this);
 
             m_World = new World("世界");
-            this.drawArgs.WorldCamera = new Camera();
+            this.drawArgs.WorldCamera = new ArcBallCamera();
 
             LastTransformation.SetIdentity(); // Reset Rotation
             ThisTransformation.SetIdentity(); // Reset Rotation

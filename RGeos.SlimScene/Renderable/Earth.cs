@@ -12,9 +12,9 @@ namespace RGeos.SlimScene.Renderable
     /// <summary>
     /// 此示例主要演示如何构造一个mesh网格,以及实现碰撞检测
     /// </summary>
-    public class Earth : RenderableObject
+    public class Earth : RenderableObject, ILayer
     {
-        public delegate void IsSelected(float dd);
+        public delegate void IsSelected(float dd, Vector3 vec);
         public IsSelected Selected;
         #region 私有变量
         private Vector3 m_center;//球体球心(模型坐标)
@@ -70,8 +70,8 @@ namespace RGeos.SlimScene.Renderable
                     pt.Y = m_center.Y + m_radius * (float)Math.Cos(i * theta);
                     pt.Z = m_center.Z + m_radius * (float)Math.Sin(i * theta) * (float)Math.Sin(j * alpha);
                     vertices[j + i * (m_stacks + 1)].Position = pt;
-                    vertices[j + i * (m_stacks + 1)].Tu = (float)j / (m_stacks );
-                    vertices[j + i * (m_stacks + 1)].Tv = (float)i / (m_slices );
+                    vertices[j + i * (m_stacks + 1)].Tu = (float)j / (m_stacks);
+                    vertices[j + i * (m_stacks + 1)].Tv = (float)i / (m_slices);
                     // vertices[j + i * (m_stacks + 1)].Color = Color.FromArgb(200, Color.Blue).ToArgb();
                 }
             }
@@ -116,7 +116,7 @@ namespace RGeos.SlimScene.Renderable
             ComputeIndices();//计算索引
 
             //构造mesh
-            mesh = new Mesh(drawArgs.Device,indices.Length / 3, vertices.Length, MeshFlags.Managed, CustomVertex.PositionTextured.Format );
+            mesh = new Mesh(drawArgs.Device, indices.Length / 3, vertices.Length, MeshFlags.Managed, CustomVertex.PositionTextured.Format);
 
             //顶点缓冲
             DataStream vs = mesh.LockVertexBuffer(LockFlags.None);
@@ -129,7 +129,7 @@ namespace RGeos.SlimScene.Renderable
             ids.WriteRange(indices);
             mesh.UnlockIndexBuffer();
             ids.Dispose();
-           
+
             this.isInitialized = true;
         }
         float ang = 0.0f;
@@ -151,23 +151,23 @@ namespace RGeos.SlimScene.Renderable
 
             try
             {
+                //获取当前转换矩阵，主要用于选择操作时，顶点的转换
                 //Matrix world2 =Matrix.Identity;
                 //ang -= 0.0003f;
                 //world2=Matrix.RotationY(ang);
                 //drawArgs.Device.SetTransform(TransformState.World, world2 * world);
 
-                //获取当前转换矩阵，主要用于选择操作时，顶点的转换
+                drawArgs.Device.SetTextureStageState(0, TextureStage.ColorOperation, TextureOperation.Modulate);
+                drawArgs.Device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Texture);
+                drawArgs.Device.SetTextureStageState(0, TextureStage.ColorArg2, TextureArgument.Diffuse);
+                drawArgs.Device.SetTextureStageState(0, TextureStage.AlphaOperation, TextureOperation.Disable);
+
                 //设置顶点格式
                 drawArgs.Device.VertexFormat = CustomVertex.PositionColored.Format;
                 //设置Z缓冲
                 drawArgs.Device.SetRenderState(RenderState.ZEnable, 1);
                 //设置纹理状态，此处使用纹理
                 drawArgs.Device.SetTexture(0, texture);//设置贴图 
-
-                drawArgs.Device.SetTextureStageState(0, TextureStage.ColorOperation, TextureOperation.Modulate);
-                drawArgs.Device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Texture);
-                drawArgs.Device.SetTextureStageState(0, TextureStage.ColorArg2, TextureArgument.Diffuse);
-                drawArgs.Device.SetTextureStageState(0, TextureStage.AlphaOperation, TextureOperation.Disable);
                 //绘制mesh网格
                 mesh.DrawSubset(0);
             }
@@ -240,8 +240,8 @@ namespace RGeos.SlimScene.Renderable
             {
                 //选中距离
                 float dis;
-                IntersectInformation[] insertInfo ;
-                
+                IntersectInformation[] insertInfo;
+
                 //构造一条基于模型本体坐标系的射线，用于判断射线是否与模型相交
                 Matrix invert = Matrix.Invert(drawArgs.WorldCamera.WorldMatrix);
                 Vector3 rayPos1 = Vector3.TransformCoordinate(rayPos, invert);
@@ -250,8 +250,40 @@ namespace RGeos.SlimScene.Renderable
                 Vector3 rayDir1 = rayPos2 - rayPos1;
                 Ray ray1 = new Ray(rayPos1, rayDir1);
                 int faces;
-                isSelected = mesh.Intersects(ray1, out dis,out faces,out insertInfo);
+                isSelected = mesh.Intersects(ray1, out dis, out faces, out insertInfo);
                 this.m_selectedMinDistance = insertInfo[0].Distance;
+
+                short[] intersectedIndices = new short[3];
+                //short[] indices = (short[])mesh.LockIndexBuffer(typeof(short), LockFlags.ReadOnly, mesh.FaceCount * 3);
+                DataStream ids = mesh.LockIndexBuffer(LockFlags.ReadOnly);
+                short[] indices = new short[mesh.FaceCount * 3];
+                ids.ReadRange(indices, 0, mesh.FaceCount * 3);
+                Array.Copy(indices, insertInfo[0].FaceIndex * 3, intersectedIndices, 0, 3);
+                mesh.UnlockIndexBuffer();
+
+                // create an array to hold the vertices for the intersected face
+                CustomVertex.PositionTextured[] IntersectedVertices = new CustomVertex.PositionTextured[3];
+
+                // extract vertex data from mesh, using our indices we obtained earlier
+                //CustomVertex.PositionTextured[] meshVertices = (CustomVertex.PositionTextured[])mesh.LockVertexBuffer(typeof(CustomVertex.PositionTextured), LockFlags.ReadOnly, mesh.VertexCount);
+                CustomVertex.PositionTextured[] meshVertices = new CustomVertex.PositionTextured[mesh.VertexCount];
+
+                DataStream vs = mesh.LockVertexBuffer(LockFlags.ReadOnly);
+                vs.ReadRange(meshVertices, 0, mesh.VertexCount);
+                //三个顶点
+                IntersectedVertices[0] = meshVertices[intersectedIndices[0]];
+                IntersectedVertices[1] = meshVertices[intersectedIndices[1]];
+                IntersectedVertices[2] = meshVertices[intersectedIndices[2]];
+                mesh.UnlockVertexBuffer();
+                //2.求交点
+                //三角形三个点的向量。
+                Vector3 v1 = new Vector3(IntersectedVertices[0].Position.X, IntersectedVertices[0].Position.Y, IntersectedVertices[0].Position.Z);
+                Vector3 v2 = new Vector3(IntersectedVertices[1].Position.X, IntersectedVertices[1].Position.Y, IntersectedVertices[1].Position.Z);
+                Vector3 v3 = new Vector3(IntersectedVertices[2].Position.X, IntersectedVertices[2].Position.Y, IntersectedVertices[2].Position.Z);
+
+                //交点 
+                pickedPosition = v1 + insertInfo[0].V * (v3 - v1) + insertInfo[0].U * (v2 - v1);
+
             }
             catch (Exception caught)
             {
@@ -288,14 +320,27 @@ namespace RGeos.SlimScene.Renderable
         public override bool PerformSelectionAction(DrawArgs drawArgs)
         {
             bool flag = PerformSelectionAction(DrawArgs.LastMousePosition.X, DrawArgs.LastMousePosition.Y, drawArgs);
-            if (Selected!=null)
+            if (Selected != null)
             {
-                Selected(m_selectedMinDistance);
+                Selected(m_selectedMinDistance, pickedPosition);
             }
             return flag;
         }
 
+        public Vector3 pickedPosition;
         public float m_selectedMinDistance { get; set; }
+
+        public string LayerName
+        {
+            get
+            {
+                return name;
+            }
+            set
+            {
+                name = value;
+            }
+        }
     }
 }
 

@@ -195,6 +195,11 @@ namespace RGeos.SlimScene.Core
                 this.RenderableObjects.Dispose();
                 this.RenderableObjects = null;
             }
+            if (mScene!=null)
+            {
+                mScene.Dispose();
+                mScene = null;
+            }
 
         }
 

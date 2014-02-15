@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -35,6 +36,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="gdal_csharp">
+      <HintPath>..\GDAL110\gdal_csharp.dll</HintPath>
+    </Reference>
     <Reference Include="SlimDX, Version=4.0.13.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Bin\SlimDX.dll</HintPath>
@@ -91,6 +95,10 @@
     <ProjectReference Include="..\RGeos.SlimScene\RGeos.SlimScene.csproj">
       <Project>{A750E8C0-82A2-498A-8110-D92F345790E2}</Project>
       <Name>RGeos.SlimScene</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RGeos.Terrain\RGeos.Terrain.csproj">
+      <Project>{1B634AB6-30BE-4BE6-AC53-FC424EE57426}</Project>
+      <Name>RGeos.Terrain</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

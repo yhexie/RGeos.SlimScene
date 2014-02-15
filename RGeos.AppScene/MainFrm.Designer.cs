@@ -33,13 +33,19 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.tspOpenXModel = new System.Windows.Forms.ToolStripMenuItem();
+            this.tspAddEarth = new System.Windows.Forms.ToolStripMenuItem();
+            this.tspOpenTerrain = new System.Windows.Forms.ToolStripMenuItem();
+            this.工具ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tspSelect = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.文件ToolStripMenuItem});
+            this.文件ToolStripMenuItem,
+            this.工具ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(586, 25);
@@ -48,6 +54,10 @@
             // 
             // 文件ToolStripMenuItem
             // 
+            this.文件ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tspOpenXModel,
+            this.tspAddEarth,
+            this.tspOpenTerrain});
             this.文件ToolStripMenuItem.Name = "文件ToolStripMenuItem";
             this.文件ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.文件ToolStripMenuItem.Text = "文件";
@@ -76,6 +86,42 @@
             this.panel1.Size = new System.Drawing.Size(426, 351);
             this.panel1.TabIndex = 4;
             // 
+            // tspOpenXModel
+            // 
+            this.tspOpenXModel.Name = "tspOpenXModel";
+            this.tspOpenXModel.Size = new System.Drawing.Size(152, 22);
+            this.tspOpenXModel.Text = "加载模型(.X)";
+            this.tspOpenXModel.Click += new System.EventHandler(this.tspOpenXModel_Click);
+            // 
+            // tspAddEarth
+            // 
+            this.tspAddEarth.Name = "tspAddEarth";
+            this.tspAddEarth.Size = new System.Drawing.Size(152, 22);
+            this.tspAddEarth.Text = "加载地球";
+            this.tspAddEarth.Click += new System.EventHandler(this.tspOpenEarth_Click);
+            // 
+            // tspOpenTerrain
+            // 
+            this.tspOpenTerrain.Name = "tspOpenTerrain";
+            this.tspOpenTerrain.Size = new System.Drawing.Size(152, 22);
+            this.tspOpenTerrain.Text = "加载地形";
+            this.tspOpenTerrain.Click += new System.EventHandler(this.tspTerrain_Click);
+            // 
+            // 工具ToolStripMenuItem
+            // 
+            this.工具ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tspSelect});
+            this.工具ToolStripMenuItem.Name = "工具ToolStripMenuItem";
+            this.工具ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.工具ToolStripMenuItem.Text = "工具";
+            // 
+            // tspSelect
+            // 
+            this.tspSelect.Name = "tspSelect";
+            this.tspSelect.Size = new System.Drawing.Size(152, 22);
+            this.tspSelect.Text = "选择";
+            this.tspSelect.Click += new System.EventHandler(this.tspSelect_Click);
+            // 
             // MainFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -103,6 +149,11 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ToolStripMenuItem tspOpenXModel;
+        private System.Windows.Forms.ToolStripMenuItem tspAddEarth;
+        private System.Windows.Forms.ToolStripMenuItem tspOpenTerrain;
+        private System.Windows.Forms.ToolStripMenuItem 工具ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tspSelect;
     }
 }
 

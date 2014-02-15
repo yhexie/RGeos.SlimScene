@@ -57,6 +57,16 @@ namespace RGeos.SlimScene
             get { return target; }
             set { target = value; }
         }
+
+        public override double Distance
+        {
+            get
+            {
+                Vector3 look = target - Position;
+                return look.Length();
+            }
+        }
+
         Vector3 upVector = new Vector3(0.0f, 1.0f, 0.0f);
 
         /// <summary>

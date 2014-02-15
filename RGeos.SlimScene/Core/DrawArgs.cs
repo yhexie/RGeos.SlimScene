@@ -17,7 +17,7 @@ namespace RGeos.SlimScene.Core
         {
             get { return m_textures; }
         }
-        public static Camera Camera = null;
+        public static RCamera Camera = null;
 
         public System.Windows.Forms.Control parentControl;
 
@@ -53,8 +53,8 @@ namespace RGeos.SlimScene.Core
             get { return m_device; }
             set { m_device = value; }
         }
-        private Camera m_WorldCamera = null;
-        public Camera WorldCamera
+        private RCamera m_WorldCamera = null;
+        public RCamera WorldCamera
         {
             get
             {

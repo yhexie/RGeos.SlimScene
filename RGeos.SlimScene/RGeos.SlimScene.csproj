@@ -54,15 +54,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Camera\Camera.cs" />
+    <Compile Include="Camera\ArcBallCamera.cs" />
+    <Compile Include="Camera\FPSCamera.cs" />
     <Compile Include="Camera\PerspectiveCamera.cs" />
     <Compile Include="Camera\Quaternion4d.cs" />
-    <Compile Include="Controls\UcSceneControl2.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\UcSceneControl2.Designer.cs">
-      <DependentUpon>UcSceneControl2.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Camera\RCamera.cs" />
     <Compile Include="Controls\UcSceneControlEx.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -71,10 +67,9 @@
     </Compile>
     <Compile Include="Core\ArcBall.cs" />
     <Compile Include="Core\Cache.cs" />
-    <Compile Include="Core\Camera.cs" />
     <Compile Include="Core\DrawArgs.cs" />
     <Compile Include="Core\IRenderable.cs" />
-    <Compile Include="Core\Layer.cs" />
+    <Compile Include="Core\ILayer.cs" />
     <Compile Include="Core\MatrixArcBall.cs" />
     <Compile Include="Renderable\Earth.cs" />
     <Compile Include="Utility\Log.cs" />
@@ -96,9 +91,6 @@
     </Compile>
     <Compile Include="RawType\PositionNormal.cs" />
     <Compile Include="RawType\PositionTextured.cs" />
-    <EmbeddedResource Include="Controls\UcSceneControl2.resx">
-      <DependentUpon>UcSceneControl2.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\UcSceneControlEx.resx">
       <DependentUpon>UcSceneControlEx.cs</DependentUpon>
     </EmbeddedResource>

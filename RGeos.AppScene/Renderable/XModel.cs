@@ -10,7 +10,7 @@ using System.IO;
 
 namespace RGeos.AppScene.Renderable
 {
-    public class XModel : RenderableObject, ILayer
+    class XModel : RenderableObject
     {
         Mesh mesh = null;
         Material meshMaterials;
@@ -135,18 +135,6 @@ namespace RGeos.AppScene.Renderable
         public override bool PerformSelectionAction(DrawArgs drawArgs)
         {
             throw new NotImplementedException();
-        }
-
-        public string LayerName
-        {
-            get
-            {
-                return name;
-            }
-            set
-            {
-                name = value;
-            }
         }
     }
 }

@@ -46,8 +46,8 @@ namespace RGeos.SlimScene.Controls
         {
             get { return drawArgs; }
         }
-        public BoundingBox BoundingBox;
 
+        public BoundingBox BoundingBox;
 
         public UcSceneControlEx()
         {
@@ -62,9 +62,10 @@ namespace RGeos.SlimScene.Controls
             drawArgs = new DrawArgs(m_Device3d, this);
 
             m_World = new World("世界");
+            RCamera mCamera = null;
             mCamera = new PerspectiveCamera();
-            mCamera.Position = new Vector3(300.0f, 300.0f, -300f);
-
+            mCamera.Position = new Vector3(0.0f, 0.0f, -300f);
+            drawArgs.WorldCamera = mCamera;
         }
 
         private void InitializeGraphics()
@@ -302,12 +303,11 @@ namespace RGeos.SlimScene.Controls
             }
         }
 
-        RCamera mCamera = null;
         // 建立相机
         private void CameraViewSetup()
         {
-            mCamera.AspectRatio = (float)Width / Height;
-            mCamera.Project(m_Device3d);
+            drawArgs.WorldCamera.AspectRatio = (float)Width / Height;
+            drawArgs.WorldCamera.Project(m_Device3d);
         }
         int i = 0;
         public void OnApplicationIdle(object sender, EventArgs e)
@@ -415,7 +415,7 @@ namespace RGeos.SlimScene.Controls
                     {
                         Matrix view = drawArgs.Device.GetTransform(TransformState.View);
 
-                        PerspectiveCamera mPersCamera = mCamera as PerspectiveCamera;
+                        PerspectiveCamera mPersCamera = drawArgs.WorldCamera as PerspectiveCamera;
                         mPersCamera.RotateRay(0.01f * deltaX, new Vector3(0f, 0f, 0f), new Vector3(view.M12, view.M22, view.M32));
                         mPersCamera.RotateRay(0.01f * deltaY, new Vector3(0f, 0f, 0f), new Vector3(view.M11, view.M21, view.M31));
 
@@ -424,7 +424,7 @@ namespace RGeos.SlimScene.Controls
                     {
                         Matrix currentView = drawArgs.Device.GetTransform(TransformState.View);//当前摄像机的视图矩阵
                         float moveFactor = 0.5f;
-                        PerspectiveCamera mPersCamera = mCamera as PerspectiveCamera;
+                        PerspectiveCamera mPersCamera = drawArgs.WorldCamera as PerspectiveCamera;
                         Vector3 CamTarget = new Vector3();
                         CamTarget.X = mPersCamera.Target.X;
                         CamTarget.Y = mPersCamera.Target.Y;
@@ -447,7 +447,10 @@ namespace RGeos.SlimScene.Controls
                     {
                         // Both buttons (zoom)
                         if (Math.Abs(deltaYNormalized) > float.Epsilon)
-                            this.drawArgs.WorldCamera.walk(-deltaYNormalized * 2);
+                        {
+                            PerspectiveCamera mPersCamera = this.drawArgs.WorldCamera as PerspectiveCamera;
+                            mPersCamera.Zoom(-(int)deltaYNormalized * 2);
+                        }
                     }
                 }
             }
@@ -490,12 +493,12 @@ namespace RGeos.SlimScene.Controls
                         isDoubleClick = false;
                         if (e.Button == MouseButtons.Left)
                         {
-                            PerspectiveCamera mPersCamera = mCamera as PerspectiveCamera;
+                            PerspectiveCamera mPersCamera = drawArgs.WorldCamera as PerspectiveCamera;
                             mPersCamera.Zoom(10);
                         }
                         else if (e.Button == MouseButtons.Right)
                         {
-                            PerspectiveCamera mPersCamera = mCamera as PerspectiveCamera;
+                            PerspectiveCamera mPersCamera = drawArgs.WorldCamera as PerspectiveCamera;
                             mPersCamera.Zoom(-10);
                         }
                     }
@@ -560,7 +563,7 @@ namespace RGeos.SlimScene.Controls
 
         protected override void OnMouseWheel(MouseEventArgs e)
         {
-            PerspectiveCamera mPersCamera = mCamera as PerspectiveCamera;
+            PerspectiveCamera mPersCamera = drawArgs.WorldCamera as PerspectiveCamera;
             mPersCamera.Zoom(e.Delta);
             base.OnMouseWheel(e);
         }
