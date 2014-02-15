@@ -30,8 +30,8 @@ namespace RGeos.AppScene
         private void MainFrm_Load(object sender, EventArgs e)
         {
             this.panel1.Controls.Add(mSceneControl);
-            Root=new TreeNode("渲染对象");
-           
+            Root = new TreeNode("渲染对象");
+
             treeView1.Nodes.Add(Root);
             mSceneControl.CurrentWorld.Scene.ItemAdded += new ItemAdded_Event(ItemAdded);
 
@@ -39,9 +39,9 @@ namespace RGeos.AppScene
             RGeos.AppScene.Renderable.Plane plane = new RGeos.AppScene.Renderable.Plane(20, 50, "Grid");
             plane.IsOn = true;
             mSceneControl.CurrentWorld.RenderableObjects.ChildObjects.Add(plane);
-           
+
         }
-      
+
         private void tspSelect_Click(object sender, EventArgs e)
         {
             foreach (object item in mSceneControl.CurrentWorld.RenderableObjects.ChildObjects)
@@ -65,7 +65,7 @@ namespace RGeos.AppScene
             model.FileName = string.Format(@"{0}\model\汽车.X", Application.StartupPath);
             XModel car = new XModel("汽车");
             car.ModelParams = model;
-           // car.RenderPriority = RenderPriority.Custom;
+            // car.RenderPriority = RenderPriority.Custom;
             car.IsOn = true;
             mSceneControl.CurrentWorld.RenderableObjects.ChildObjects.Add(car);
 
@@ -121,7 +121,8 @@ namespace RGeos.AppScene
                 //  richTextBox1.Text = str;
                 RasterHelper rester = new RasterHelper(__Geodataset, __DisplayBands);
                 Bitmap __BitMap = rester.InitialIMG(this.Width, this.Height);
-                SimpleRasterShow simRaster = new SimpleRasterShow(__ImagePath);
+                Vector3 position = new Vector3(-100f, 0f, 100f);
+                SimpleRasterShow simRaster = new SimpleRasterShow(__ImagePath, position, __BitMap.Width, __BitMap.Height);
                 simRaster.IsOn = true;
                 simRaster.RenderPriority = RenderPriority.Custom;
                 simRaster.bitmap = __BitMap;

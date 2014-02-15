@@ -18,16 +18,21 @@ namespace RGeos.Terrain
         private Texture texture;//定义贴图变量 
         private Material material;//定义材质变量 
         public Bitmap bitmap = null;
-        public SimpleRasterShow(string name)
+        public Vector3 mPosition = new Vector3();
+        public int Width;
+        public int Height;
+        public SimpleRasterShow(string name, Vector3 position, int width, int height)
             : base(name)
         {
-
+            mPosition = position;
+            Width = width;
+            Height = height;
         }
         public override void Initialize(DrawArgs drawArgs)
         {
             this.isInitialized = true;
             LoadTexturesAndMaterials(drawArgs);
-            VertexDeclaration();
+            VertexDeclarationBySize();
         }
 
         public override void Update(DrawArgs drawArgs)
@@ -81,7 +86,7 @@ namespace RGeos.Terrain
 
                 //设置Z缓冲
                 drawArgs.Device.SetRenderState(RenderState.ZEnable, 1);
-               
+
                 drawArgs.Device.SetTextureStageState(0, TextureStage.ColorOperation, TextureOperation.Modulate);
                 drawArgs.Device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Texture);
                 drawArgs.Device.SetTextureStageState(0, TextureStage.ColorArg2, TextureArgument.Diffuse);
@@ -105,19 +110,36 @@ namespace RGeos.Terrain
             }
         }
 
-        private void VertexDeclaration1()//定义顶点1 
+        private void VertexDeclarationBySize()//定义顶点1 
         {
-            vertices = new CustomVertex.PositionTextured[3];
-            vertices[0].Position = new Vector3(10f, 0f, 10f);
+            vertices = new CustomVertex.PositionTextured[6];
+            Vector3 one = mPosition;
+            Vector3 two = mPosition + Width * Vector3.UnitX;
+            Vector3 three = mPosition + Width * Vector3.UnitX;
+            three = three - Height * Vector3.UnitZ;
+            Vector3 four = mPosition - Height * Vector3.UnitZ;
+
+            vertices[0].Position = two;
             vertices[0].Tu = 1;
             vertices[0].Tv = 0;
-            vertices[1].Position = new Vector3(-10f, 0f, -10f);
+            vertices[1].Position = four;
             vertices[1].Tu = 0;
             vertices[1].Tv = 1;
-            vertices[2].Position = new Vector3(10f, 0f, -10f);
+            vertices[2].Position = one;
             vertices[2].Tu = 1;
             vertices[2].Tv = 1;
+
+            vertices[3].Position = four;
+            vertices[3].Tu = 0;
+            vertices[3].Tv = 1;
+            vertices[4].Position = two;
+            vertices[4].Tu = 1;
+            vertices[4].Tv = 0;
+            vertices[5].Position = three;
+            vertices[5].Tu = 0;
+            vertices[5].Tv = 0;
         }
+
         private void VertexDeclaration()//定义顶点 
         {
             vertices = new CustomVertex.PositionTextured[6];
