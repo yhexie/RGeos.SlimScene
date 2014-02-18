@@ -96,6 +96,7 @@ namespace RGeos.AppScene
             {
                 OSGeo.GDAL.Gdal.AllRegister();
                 __ImagePath = dlg.FileName;
+                string NameOf = System.IO.Path.GetFileNameWithoutExtension(__ImagePath);
                 //txtPath.Text = __ImagePath;
                 OSGeo.GDAL.Dataset dataset = OSGeo.GDAL.Gdal.Open(__ImagePath, OSGeo.GDAL.Access.GA_ReadOnly);
                 __Geodataset = dataset;
@@ -122,7 +123,7 @@ namespace RGeos.AppScene
                 RasterHelper rester = new RasterHelper(__Geodataset, __DisplayBands);
                 Bitmap __BitMap = rester.InitialIMG(this.Width, this.Height);
                 Vector3 position = new Vector3(-100f, 0f, 100f);
-                SimpleRasterShow simRaster = new SimpleRasterShow(__ImagePath, position, __BitMap.Width, __BitMap.Height);
+                SimpleRasterShow simRaster = new SimpleRasterShow(NameOf, position, __BitMap.Width, __BitMap.Height);
                 simRaster.IsOn = true;
                 simRaster.RenderPriority = RenderPriority.Custom;
                 simRaster.bitmap = __BitMap;
@@ -136,6 +137,32 @@ namespace RGeos.AppScene
             layerNode.Text = layer.LayerName;
             Root.Nodes.Add(layerNode);
             Root.ExpandAll();
+        }
+
+        private void tspLoadDEM_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Title = "";
+            dlg.Filter = "Img(*.img)|*.img";
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                string file = dlg.FileName;
+                string NameOf = System.IO.Path.GetFileNameWithoutExtension(file);
+                DemHelper dem = new DemHelper();
+                dem.Start();
+                dem.Read(file);
+                RasterBandData bandata = dem.ReadDate(50, 40);
+                Bitmap bitmap = dem.MakeGrayScale(50, 40);
+                Vector3 position = new Vector3(-100f, 0f, 100f);
+                //SimpleRasterShow simRaster = new SimpleRasterShow(NameOf, position, bitmap.Width, bitmap.Height);
+                //simRaster.IsOn = true;
+                //simRaster.RenderPriority = RenderPriority.Custom;
+                //simRaster.bitmap = bitmap;
+                //mSceneControl.CurrentWorld.RenderableObjects.ChildObjects.Add(simRaster);
+                RTerrain terrain = new RTerrain(NameOf, bandata, bitmap);
+                terrain.IsOn = true;
+                mSceneControl.CurrentWorld.RenderableObjects.ChildObjects.Add(terrain);
+            }
         }
     }
 }

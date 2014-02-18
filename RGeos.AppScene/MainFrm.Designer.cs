@@ -30,14 +30,15 @@
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.treeView1 = new System.Windows.Forms.TreeView();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.tspOpenXModel = new System.Windows.Forms.ToolStripMenuItem();
             this.tspAddEarth = new System.Windows.Forms.ToolStripMenuItem();
             this.tspOpenTerrain = new System.Windows.Forms.ToolStripMenuItem();
             this.工具ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tspSelect = new System.Windows.Forms.ToolStripMenuItem();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.tspLoadDEM = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,7 +49,7 @@
             this.工具ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(586, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(748, 25);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -57,34 +58,11 @@
             this.文件ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tspOpenXModel,
             this.tspAddEarth,
-            this.tspOpenTerrain});
+            this.tspOpenTerrain,
+            this.tspLoadDEM});
             this.文件ToolStripMenuItem.Name = "文件ToolStripMenuItem";
             this.文件ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.文件ToolStripMenuItem.Text = "文件";
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 376);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(586, 22);
-            this.statusStrip1.TabIndex = 2;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // treeView1
-            // 
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.treeView1.Location = new System.Drawing.Point(0, 25);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(160, 351);
-            this.treeView1.TabIndex = 3;
-            // 
-            // panel1
-            // 
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(160, 25);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(426, 351);
-            this.panel1.TabIndex = 4;
             // 
             // tspOpenXModel
             // 
@@ -104,7 +82,7 @@
             // 
             this.tspOpenTerrain.Name = "tspOpenTerrain";
             this.tspOpenTerrain.Size = new System.Drawing.Size(152, 22);
-            this.tspOpenTerrain.Text = "加载地形";
+            this.tspOpenTerrain.Text = "加载影像";
             this.tspOpenTerrain.Click += new System.EventHandler(this.tspTerrain_Click);
             // 
             // 工具ToolStripMenuItem
@@ -118,15 +96,46 @@
             // tspSelect
             // 
             this.tspSelect.Name = "tspSelect";
-            this.tspSelect.Size = new System.Drawing.Size(152, 22);
+            this.tspSelect.Size = new System.Drawing.Size(100, 22);
             this.tspSelect.Text = "选择";
             this.tspSelect.Click += new System.EventHandler(this.tspSelect_Click);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Location = new System.Drawing.Point(0, 428);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(748, 22);
+            this.statusStrip1.TabIndex = 2;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // treeView1
+            // 
+            this.treeView1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.treeView1.Location = new System.Drawing.Point(0, 25);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.Size = new System.Drawing.Size(160, 403);
+            this.treeView1.TabIndex = 3;
+            // 
+            // panel1
+            // 
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(160, 25);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(588, 403);
+            this.panel1.TabIndex = 4;
+            // 
+            // tspLoadDEM
+            // 
+            this.tspLoadDEM.Name = "tspLoadDEM";
+            this.tspLoadDEM.Size = new System.Drawing.Size(152, 22);
+            this.tspLoadDEM.Text = "加载DEM";
+            this.tspLoadDEM.Click += new System.EventHandler(this.tspLoadDEM_Click);
             // 
             // MainFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(586, 398);
+            this.ClientSize = new System.Drawing.Size(748, 450);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.treeView1);
             this.Controls.Add(this.statusStrip1);
@@ -154,6 +163,7 @@
         private System.Windows.Forms.ToolStripMenuItem tspOpenTerrain;
         private System.Windows.Forms.ToolStripMenuItem 工具ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tspSelect;
+        private System.Windows.Forms.ToolStripMenuItem tspLoadDEM;
     }
 }
 

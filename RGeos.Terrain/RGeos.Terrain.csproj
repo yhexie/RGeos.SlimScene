@@ -59,8 +59,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DemHelper.cs" />
+    <Compile Include="RasterBandData.cs" />
     <Compile Include="RasterHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RTerrain.cs" />
     <Compile Include="SimpleRasterShow.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
