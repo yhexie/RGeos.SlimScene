@@ -74,7 +74,7 @@ namespace RGeos.AppScene.Renderable
                 //开始渲染精灵
                 drawArgs.DefaultSprite.Begin(SpriteFlags.AlphaBlend);
 
-                drawArgs.DefaultSprite.Draw(this.mTexture, new Vector3(0, 0, 0), Vector3.Zero, new Color4(Color.White));
+                drawArgs.DefaultSprite.Draw(this.mTexture, new Vector3(1, 1, 0), Vector3.Zero, new Color4(Color.White));
                 //渲染字体             
                 drawArgs.DefaultDrawingFont.DrawString(drawArgs.DefaultSprite, name, 10, 10, new Color4(Color.White));
             }

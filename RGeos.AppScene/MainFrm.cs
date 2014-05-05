@@ -39,11 +39,17 @@ namespace RGeos.AppScene
             RGeos.AppScene.Renderable.Plane plane = new RGeos.AppScene.Renderable.Plane(20, 50, "Grid");
             plane.IsOn = true;
             mSceneControl.CurrentWorld.RenderableObjects.ChildObjects.Add(plane);
+            string path = string.Format(@"{0}\data\Icons\定位.png", Application.StartupPath);
+            SpriteTest sprite = new SpriteTest("你好", new Vector3(10f, 0f, 0f), path);
+            mSceneControl.CurrentWorld.RenderableObjects.ChildObjects.Add(sprite);
 
+            SpriteTest sprite2 = new SpriteTest("你好2", new Vector3(40f, 10f, 0f), path);
+            mSceneControl.CurrentWorld.RenderableObjects.ChildObjects.Add(sprite2);
         }
 
         private void tspSelect_Click(object sender, EventArgs e)
         {
+            mSceneControl.CurrentWorld.RenderableObjects.ChildObjects.Add(renderline);
             foreach (object item in mSceneControl.CurrentWorld.RenderableObjects.ChildObjects)
             {
                 if (item is Earth)
@@ -51,13 +57,48 @@ namespace RGeos.AppScene
                     Earth earth = item as Earth;
                     bool flag = earth.PerformSelectionAction(mSceneControl.DrawArgs);
                     earth.Selected += Selected;
+                    lines.ShapeType = ShapeType.Polyline;
+                    renderline.FeatureClass = lines;
 
                 }
             }
         }
+        RenderLayer renderline = new RenderLayer("Line");
+        FeatureClass lines = new FeatureClass();
+        Feature feat = null;
+        int num;
+        int lineID;
         public void Selected(float dd, Vector3 vec)
         {
-            MessageBox.Show(dd.ToString() + vec.ToString());
+            // MessageBox.Show(dd.ToString() + vec.ToString());
+            string path = string.Format(@"{0}\data\Icons\定位.png", Application.StartupPath);
+            SpriteTest sprite2 = new SpriteTest("1", vec, path);
+            mSceneControl.CurrentWorld.RenderableObjects.ChildObjects.Add(sprite2);
+
+            if (num == 0)
+            {
+                feat = new Feature();
+                Line line = new Line();
+                feat.Shape = line as IGeometry;
+                feat.FID = lineID;
+                line.Name = lineID.ToString();
+                lineID++;
+                line.v1 = vec;
+                num++;
+            }
+            else
+            {
+                num = 0;
+                if (feat != null && feat.Shape != null)
+                {
+                    Line line = feat.Shape as Line;
+                    line.v2 = vec;
+                    lines.AddFeature(feat);
+                }
+
+
+            }
+
         }
         private void tspOpenXModel_Click(object sender, EventArgs e)
         {

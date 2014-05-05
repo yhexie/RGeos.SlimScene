@@ -26,7 +26,7 @@ namespace RGeos.SlimScene.Core
         public int numBoundariesDrawn;
 
         public System.Drawing.Font defaultSubTitleFont;
-
+        public Font DefaultDrawingFont;
         public int screenWidth;
         public int screenHeight;
         public static System.Drawing.Point LastMousePosition;
@@ -46,6 +46,7 @@ namespace RGeos.SlimScene.Core
         public int TexturesLoadedThisFrame = 0;
         private static System.Drawing.Bitmap bitmap;
         public static System.Drawing.Graphics Graphics = null;
+        public Sprite DefaultSprite = null;
         // Ù–‘
         private Device m_device = null;
         public Device Device
@@ -95,7 +96,9 @@ namespace RGeos.SlimScene.Core
             DrawArgs.ParentControl = parentForm;
             DrawArgs.sDevice = device;
             this.m_device = device;
-
+            DefaultSprite = new Sprite(m_device);
+            defaultSubTitleFont=new System.Drawing.Font("ÀŒÃÂ",12);
+            DefaultDrawingFont = new Font(m_device, defaultSubTitleFont);
             bitmap = new System.Drawing.Bitmap(256, 256, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             DrawArgs.Graphics = System.Drawing.Graphics.FromImage(bitmap);
             //	InitializeReference();
