@@ -63,6 +63,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Renderable\Flash.cs" />
     <Compile Include="Renderable\IGeometry.cs" />
     <Compile Include="Renderable\LineString.cs" />
     <Compile Include="Renderable\ModelParams.cs" />

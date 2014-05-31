@@ -45,6 +45,9 @@ namespace RGeos.AppScene
 
             SpriteTest sprite2 = new SpriteTest("你好2", new Vector3(40f, 10f, 0f), path);
             mSceneControl.CurrentWorld.RenderableObjects.ChildObjects.Add(sprite2);
+            string path2 = string.Format(@"{0}\data\Icons\flicker.png", Application.StartupPath);
+            Flash sFlash = new Flash("Hello", new Vector3(50f, 50f, 0f), path2);
+            mSceneControl.CurrentWorld.RenderableObjects.ChildObjects.Add(sFlash);
         }
 
         private void tspSelect_Click(object sender, EventArgs e)
