@@ -107,12 +107,30 @@ namespace RGeos.SlimScene.Controls
             {
                 return;
             }
-
+            Result result;
+            if (    drawArgs!=null && drawArgs.DefaultSprite!=null)
+            {
+                if (drawArgs.DefaultSprite.Disposed==false)
+                {
+                    drawArgs.DefaultSprite.Dispose();
+                }
+            }
             PresentParameters presentParameters = this.m_presentParams.Clone();
             presentParameters.BackBufferHeight = this.Height;
             presentParameters.BackBufferWidth = this.Width;
             presentParameters.DeviceWindowHandle = base.Handle;
-            m_Device3d.Reset(presentParameters);
+            result = m_Device3d.Reset(presentParameters);
+            if (!result.IsFailure)
+            {
+                if (drawArgs != null && drawArgs.DefaultSprite != null)
+                {
+                    if (drawArgs.DefaultSprite.Disposed == false)
+                    {
+                        drawArgs.DefaultSprite.Dispose();
+                    }
+                    drawArgs.DefaultSprite = new Sprite(m_Device3d);
+                }
+            }
             if ((m_Device3d.Capabilities.TextureFilterCaps & FilterCaps.MinLinear) == FilterCaps.MinLinear)
             {
                 m_Device3d.SetSamplerState(0, SamplerState.MinFilter, TextureFilter.Linear);
