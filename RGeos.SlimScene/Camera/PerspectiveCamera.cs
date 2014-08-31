@@ -87,6 +87,7 @@ namespace RGeos.SlimScene
             //gl.Translate(Position.X, Position.Y, Position.Z);
             //gl.Perspective(fieldOfView, AspectRatio, near, far);
             Matrix projection = Matrix.PerspectiveFovLH(fieldOfView, AspectRatio, near, far);
+            //Matrix projection = Matrix.OrthoLH(mViewPort.Width, mViewPort.Height, near, far);
             device.SetTransform(TransformState.Projection, projection);
 
             //  Perform the look at transformation.

@@ -96,7 +96,7 @@ namespace RGeos.SlimScene.Core
             DrawArgs.ParentControl = parentForm;
             DrawArgs.sDevice = device;
             this.m_device = device;
-            DefaultSprite = new Sprite(m_device);
+           // DefaultSprite = new Sprite(m_device);
             defaultSubTitleFont=new System.Drawing.Font("ËÎÌו",12);
             DefaultDrawingFont = new Font(m_device, defaultSubTitleFont);
             bitmap = new System.Drawing.Bitmap(256, 256, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
@@ -137,7 +137,12 @@ namespace RGeos.SlimScene.Core
             //    (float)PerformanceTimer.TicksPerSecond;
 
             // Display the render
-            m_device.Present();
+            if (!this.Device.Disposed)
+            {
+                m_device.Present();
+            }
+
+           
         }
 
         /// <summary>

@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="Camera\ArcBallCamera.cs" />
     <Compile Include="Camera\FPSCamera.cs" />
+    <Compile Include="Camera\Frustum.cs" />
     <Compile Include="Camera\PerspectiveCamera.cs" />
     <Compile Include="Camera\Quaternion4d.cs" />
     <Compile Include="Camera\RCamera.cs" />

@@ -61,7 +61,7 @@ namespace RGeos.AppScene
                     bool flag = earth.PerformSelectionAction(mSceneControl.DrawArgs);
                     earth.Selected += Selected;
                     lines.ShapeType = ShapeType.Polyline;
-                    renderline.FeatureClass = lines;
+                   // renderline.FeatureClass = lines;
 
                 }
             }
@@ -96,7 +96,7 @@ namespace RGeos.AppScene
                 {
                     Line line = feat.Shape as Line;
                     line.v2 = vec;
-                    lines.AddFeature(feat);
+                    renderline.FeatureClass.AddFeature(feat);
                 }
 
 

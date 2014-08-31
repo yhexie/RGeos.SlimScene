@@ -163,7 +163,7 @@ namespace RGeos.SlimScene.Renderable
                 drawArgs.Device.SetTextureStageState(0, TextureStage.AlphaOperation, TextureOperation.Disable);
 
                 //设置顶点格式
-                drawArgs.Device.VertexFormat = CustomVertex.PositionColored.Format;
+                drawArgs.Device.VertexFormat = CustomVertex.PositionTextured.Format;
                 //设置Z缓冲
                 drawArgs.Device.SetRenderState(RenderState.ZEnable, 1);
                 //设置纹理状态，此处使用纹理
@@ -182,8 +182,13 @@ namespace RGeos.SlimScene.Renderable
                 drawArgs.Device.SetRenderState(RenderState.ZEnable, zEnable);
                 drawArgs.Device.SetTextureStageState(0, TextureStage.ColorOperation, colorOper);
             }
+            if (disposing)
+            {
+                Dispose();
+                disposing = false;
+            }
         }
-
+        public bool disposing = false;
         /// <summary>
         /// 更新对象
         /// </summary>
@@ -298,7 +303,16 @@ namespace RGeos.SlimScene.Renderable
         public override void Dispose()
         {
             if (this.mesh != null)
+            {
                 this.mesh.Dispose();
+                mesh = null;
+            }
+            if (texture != null)
+            {
+                texture.Dispose();
+                texture = null;
+            }
+
             this.isInitialized = false;
             //base.Dispose();
         }

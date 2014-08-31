@@ -13,6 +13,10 @@ namespace CustomVertex
     {
         public Vector3 Position;
         public int Color;
+        public static int SizeBytes
+        {
+            get { return Marshal.SizeOf(typeof(PositionColored)); }
+        }
         public static VertexFormat Format
         {
             get

@@ -56,11 +56,12 @@ namespace RGeos.AppScene.Renderable
             set { mFeatureClass = value; }
         }
         Hashtable ShowObjects = new Hashtable();
-
+        List<IRenderableFeature> mRenderGeometries = null;
         public RenderLayer(string name)
             : base(name)
         {
             mFeatureClass = new FeatureClass();
+            mRenderGeometries = new List<IRenderableFeature>();
             mFeatureClass.FeaureChanged += new FeaureChanged(mFeaureChanged);
         }
         public void mFeaureChanged()
@@ -71,49 +72,84 @@ namespace RGeos.AppScene.Renderable
         {
             if (mFeatureClass != null && mFeatureClass.Features.Count > 0)
             {
-                this.isInitialized = true;
+                for (int i = 0; i < mFeatureClass.Features.Count; i++)
+                {
+                    Feature feat = mFeatureClass.Features[i];
+                    IGeometry geo = feat.Shape;
+                    IRenderableFeature renderGeo = new RenderableFeature(feat);
+                    mRenderGeometries.Add(renderGeo);
+                }
             }
-
+            this.isInitialized = true;
         }
-
+        bool AddingNew { get; set; }
         public override void Update(DrawArgs drawArgs)
         {
             if (!this.isInitialized)
             {
                 this.Initialize(drawArgs);
             }
-            lock (ShowObjects.SyncRoot)
+
+            //移除不可见到的要素
+            RemoveInvisibleGeometries(drawArgs);
+
+            for (int i = 0; i < mRenderGeometries.Count; i++)
             {
-                ShowObjects.Clear();
-            }
-            for (int i = 0; i < mFeatureClass.Features.Count; i++)
-            {
-                if (true)
+                IRenderableFeature tmpGeo = mRenderGeometries[i];
+                IRenderableFeature renderGeo = ShowObjects[tmpGeo.Feature.FID] as IRenderableFeature;
+                if (renderGeo != null)
+                {
+                    renderGeo.Update(drawArgs);
+                    continue;
+                }
+                if (drawArgs.WorldCamera.ViewFrustum.Intersects(mRenderGeometries[i].BoundingBox))
                 {
                     lock (ShowObjects.SyncRoot)
                     {
-                        Feature feat = mFeatureClass.Features[i];
-                        ShowObjects.Add(feat.FID, feat.Shape);
+                        ShowObjects.Add(tmpGeo.Feature.FID, mRenderGeometries[i]);
+                        tmpGeo.Update(drawArgs);
                     }
                 }
             }
         }
+        protected void RemoveInvisibleGeometries(DrawArgs drawArgs)
+        {
+            ArrayList deletionList = new ArrayList();
 
+            lock (ShowObjects.SyncRoot)
+            {
+                //不在裁剪体内的加入删除集合
+                foreach (int key in ShowObjects.Keys)
+                {
+                    IRenderableFeature qt = (IRenderableFeature)ShowObjects[key];
+                    if (!drawArgs.WorldCamera.ViewFrustum.Intersects(qt.BoundingBox))
+                        deletionList.Add(key);
+                }
+                //从总体中删除
+                foreach (int deleteThis in deletionList)
+                {
+                    IRenderableFeature qt = (IRenderableFeature)ShowObjects[deleteThis];
+                    if (qt != null)
+                    {
+                        ShowObjects.Remove(deleteThis);
+                        qt.Dispose();
+                    }
+                }
+            }
+        }
         public override void Render(DrawArgs drawArgs)
         {
             if (!this.IsOn || !this.isInitialized) return;
+
+            foreach (IRenderableFeature qt in ShowObjects.Values)
+                qt.Render(drawArgs);
+
             for (int i = 0; i < ShowObjects.Count; i++)
             {
                 Line line = ShowObjects[i] as Line;
                 if (line != null)
                 {
-                    PositionColored[] axisX = new PositionColored[2];
-                    axisX[0].Position = line.v1;
 
-                    axisX[0].Color = System.Drawing.Color.Green.ToArgb();
-                    axisX[1].Position = line.v2;
-                    axisX[1].Color = System.Drawing.Color.Green.ToArgb();
-                    drawArgs.Device.DrawUserPrimitives(PrimitiveType.LineStrip, 1, axisX);
                 }
 
             }

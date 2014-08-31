@@ -5,6 +5,7 @@ using System.Text;
 using SlimDX;
 using System.ComponentModel;
 using SlimDX.Direct3D9;
+using RGeos.SlimScene.Camera;
 
 namespace RGeos.SlimScene
 {
@@ -124,7 +125,15 @@ namespace RGeos.SlimScene
         protected Matrix m_ProjectionMatrix = new Matrix();
         protected Matrix m_ViewMatrix; //上一次渲染采用的观察矩阵
         protected Matrix m_WorldMatrix = Matrix.Identity;//世界变换矩阵
+        protected Frustum mViewFrustum=new Frustum();
 
+        public Frustum ViewFrustum
+        {
+            get
+            {
+                return mViewFrustum;
+            }
+        }
         //视口大小
         public Viewport Viewport
         {
