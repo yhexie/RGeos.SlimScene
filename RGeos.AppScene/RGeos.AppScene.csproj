@@ -96,6 +96,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\RGeos.Geometry\RGeos.Geometry.csproj">
+      <Project>{7428FA76-C502-457D-8F58-62A637162CBD}</Project>
+      <Name>RGeos.Geometry</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RGeos.SlimScene\RGeos.SlimScene.csproj">
       <Project>{A750E8C0-82A2-498A-8110-D92F345790E2}</Project>
       <Name>RGeos.SlimScene</Name>

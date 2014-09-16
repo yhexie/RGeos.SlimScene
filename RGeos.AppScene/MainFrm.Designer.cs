@@ -33,12 +33,14 @@
             this.tspOpenXModel = new System.Windows.Forms.ToolStripMenuItem();
             this.tspAddEarth = new System.Windows.Forms.ToolStripMenuItem();
             this.tspOpenTerrain = new System.Windows.Forms.ToolStripMenuItem();
+            this.tspLoadDEM = new System.Windows.Forms.ToolStripMenuItem();
             this.工具ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tspSelect = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.tspLoadDEM = new System.Windows.Forms.ToolStripMenuItem();
+            this.绘制ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tspDrawPolyline = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,10 +48,11 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.文件ToolStripMenuItem,
-            this.工具ToolStripMenuItem});
+            this.工具ToolStripMenuItem,
+            this.绘制ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(748, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(748, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -61,42 +64,49 @@
             this.tspOpenTerrain,
             this.tspLoadDEM});
             this.文件ToolStripMenuItem.Name = "文件ToolStripMenuItem";
-            this.文件ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.文件ToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
             this.文件ToolStripMenuItem.Text = "文件";
             // 
             // tspOpenXModel
             // 
             this.tspOpenXModel.Name = "tspOpenXModel";
-            this.tspOpenXModel.Size = new System.Drawing.Size(152, 22);
+            this.tspOpenXModel.Size = new System.Drawing.Size(142, 22);
             this.tspOpenXModel.Text = "加载模型(.X)";
             this.tspOpenXModel.Click += new System.EventHandler(this.tspOpenXModel_Click);
             // 
             // tspAddEarth
             // 
             this.tspAddEarth.Name = "tspAddEarth";
-            this.tspAddEarth.Size = new System.Drawing.Size(152, 22);
+            this.tspAddEarth.Size = new System.Drawing.Size(142, 22);
             this.tspAddEarth.Text = "加载地球";
             this.tspAddEarth.Click += new System.EventHandler(this.tspOpenEarth_Click);
             // 
             // tspOpenTerrain
             // 
             this.tspOpenTerrain.Name = "tspOpenTerrain";
-            this.tspOpenTerrain.Size = new System.Drawing.Size(152, 22);
+            this.tspOpenTerrain.Size = new System.Drawing.Size(142, 22);
             this.tspOpenTerrain.Text = "加载影像";
             this.tspOpenTerrain.Click += new System.EventHandler(this.tspTerrain_Click);
+            // 
+            // tspLoadDEM
+            // 
+            this.tspLoadDEM.Name = "tspLoadDEM";
+            this.tspLoadDEM.Size = new System.Drawing.Size(142, 22);
+            this.tspLoadDEM.Text = "加载DEM";
+            this.tspLoadDEM.Click += new System.EventHandler(this.tspLoadDEM_Click);
             // 
             // 工具ToolStripMenuItem
             // 
             this.工具ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tspSelect});
             this.工具ToolStripMenuItem.Name = "工具ToolStripMenuItem";
-            this.工具ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.工具ToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
             this.工具ToolStripMenuItem.Text = "工具";
             // 
             // tspSelect
             // 
             this.tspSelect.Name = "tspSelect";
-            this.tspSelect.Size = new System.Drawing.Size(100, 22);
+            this.tspSelect.Size = new System.Drawing.Size(94, 22);
             this.tspSelect.Text = "选择";
             this.tspSelect.Click += new System.EventHandler(this.tspSelect_Click);
             // 
@@ -111,25 +121,33 @@
             // treeView1
             // 
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.treeView1.Location = new System.Drawing.Point(0, 25);
+            this.treeView1.Location = new System.Drawing.Point(0, 24);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(160, 403);
+            this.treeView1.Size = new System.Drawing.Size(160, 404);
             this.treeView1.TabIndex = 3;
             // 
             // panel1
             // 
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(160, 25);
+            this.panel1.Location = new System.Drawing.Point(160, 24);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(588, 403);
+            this.panel1.Size = new System.Drawing.Size(588, 404);
             this.panel1.TabIndex = 4;
             // 
-            // tspLoadDEM
+            // 绘制ToolStripMenuItem
             // 
-            this.tspLoadDEM.Name = "tspLoadDEM";
-            this.tspLoadDEM.Size = new System.Drawing.Size(152, 22);
-            this.tspLoadDEM.Text = "加载DEM";
-            this.tspLoadDEM.Click += new System.EventHandler(this.tspLoadDEM_Click);
+            this.绘制ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tspDrawPolyline});
+            this.绘制ToolStripMenuItem.Name = "绘制ToolStripMenuItem";
+            this.绘制ToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
+            this.绘制ToolStripMenuItem.Text = "绘制";
+            // 
+            // tspDrawPolyline
+            // 
+            this.tspDrawPolyline.Name = "tspDrawPolyline";
+            this.tspDrawPolyline.Size = new System.Drawing.Size(152, 22);
+            this.tspDrawPolyline.Text = "线";
+            this.tspDrawPolyline.Click += new System.EventHandler(this.tspDrawPolyline_Click);
             // 
             // MainFrm
             // 
@@ -164,6 +182,8 @@
         private System.Windows.Forms.ToolStripMenuItem 工具ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tspSelect;
         private System.Windows.Forms.ToolStripMenuItem tspLoadDEM;
+        private System.Windows.Forms.ToolStripMenuItem 绘制ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tspDrawPolyline;
     }
 }
 

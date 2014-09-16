@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RGeos.Terrain", "RGeos.Terr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RGeos.FrameWork.MVC", "RGeos.FrameWork.MVC\RGeos.FrameWork.MVC.csproj", "{805F699C-E6BD-417D-A1DD-F0EBF40926B4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RGeos.Geometry", "RGeos.Geometry\RGeos.Geometry.csproj", "{7428FA76-C502-457D-8F58-62A637162CBD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,16 @@ Global
 		{805F699C-E6BD-417D-A1DD-F0EBF40926B4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{805F699C-E6BD-417D-A1DD-F0EBF40926B4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{805F699C-E6BD-417D-A1DD-F0EBF40926B4}.Release|x86.ActiveCfg = Release|Any CPU
+		{7428FA76-C502-457D-8F58-62A637162CBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7428FA76-C502-457D-8F58-62A637162CBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7428FA76-C502-457D-8F58-62A637162CBD}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{7428FA76-C502-457D-8F58-62A637162CBD}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{7428FA76-C502-457D-8F58-62A637162CBD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7428FA76-C502-457D-8F58-62A637162CBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7428FA76-C502-457D-8F58-62A637162CBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7428FA76-C502-457D-8F58-62A637162CBD}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{7428FA76-C502-457D-8F58-62A637162CBD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{7428FA76-C502-457D-8F58-62A637162CBD}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

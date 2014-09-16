@@ -72,6 +72,7 @@
     <Compile Include="Core\IRenderable.cs" />
     <Compile Include="Core\ILayer.cs" />
     <Compile Include="Core\MatrixArcBall.cs" />
+    <Compile Include="RawType\PositionColoredTextured.cs" />
     <Compile Include="Renderable\Earth.cs" />
     <Compile Include="Utility\Log.cs" />
     <Compile Include="Core\NativeMethods.cs" />
