@@ -66,8 +66,8 @@ namespace RGeos.SlimScene
                 return look.Length();
             }
         }
-
-        Vector3 upVector = new Vector3(0.0f, 1.0f, 0.0f);
+        //相机上向量与世界的Z保持一致
+        Vector3 upVector = new Vector3(0.0f, 0.0f, 1.0f);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PerspectiveCamera"/> class.

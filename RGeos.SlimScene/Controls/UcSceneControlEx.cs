@@ -64,7 +64,7 @@ namespace RGeos.SlimScene.Controls
             m_World = new World("世界");
             RCamera mCamera = null;
             mCamera = new PerspectiveCamera();
-            mCamera.Position = new Vector3(0.0f, 0.0f, -300f);
+            mCamera.Position = new Vector3(0.0f, 300.0f, 0f);
             drawArgs.WorldCamera = mCamera;
         }
 
@@ -107,14 +107,14 @@ namespace RGeos.SlimScene.Controls
             {
                 return;
             }
-            Result result;
-            if (    drawArgs!=null && drawArgs.DefaultSprite!=null)
+            if (drawArgs != null)
             {
-                if (drawArgs.DefaultSprite.Disposed==false)
+                if (drawArgs.DefaultSprite != null && drawArgs.DefaultSprite.Disposed == false)
                 {
                     drawArgs.DefaultSprite.Dispose();
                 }
             }
+            Result result;
             PresentParameters presentParameters = this.m_presentParams.Clone();
             presentParameters.BackBufferHeight = this.Height;
             presentParameters.BackBufferWidth = this.Width;
@@ -122,9 +122,9 @@ namespace RGeos.SlimScene.Controls
             result = m_Device3d.Reset(presentParameters);
             if (!result.IsFailure)
             {
-                if (drawArgs != null && drawArgs.DefaultSprite != null)
+                if (drawArgs != null)
                 {
-                    if (drawArgs.DefaultSprite.Disposed == false)
+                    if (drawArgs.DefaultSprite != null && drawArgs.DefaultSprite.Disposed == false)
                     {
                         drawArgs.DefaultSprite.Dispose();
                     }
@@ -232,6 +232,7 @@ namespace RGeos.SlimScene.Controls
                 //m_Device3d.Viewport = new Viewport(Left, Top, Width, this.Height);
                 OnDeviceReset();//窗体大小改变时，重置设备
                 this.drawArgs.screenHeight = this.Height;
+                // drawArgs.m_CurrentWorld.Initialize(drawArgs);
                 this.drawArgs.screenWidth = this.Width;
 
             }
@@ -330,6 +331,9 @@ namespace RGeos.SlimScene.Controls
         int i = 0;
         public void OnApplicationIdle(object sender, EventArgs e)
         {
+            //int a = Thread.CurrentThread.ManagedThreadId;
+            //Thread.Sleep(2000);
+            //Log.Write("Idle:" + a);
             if (Parent.Focused && !Focused)
                 Focus();
             while (IsAppStillIdle)
@@ -400,6 +404,11 @@ namespace RGeos.SlimScene.Controls
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
+            int a = Thread.CurrentThread.ManagedThreadId;
+            Log.Write("MouseMove" + a);
+            //bool flag = true;
+            //Thread.Sleep(1000);
+
             // Default to default cursor
             DrawArgs.MouseCursor = CursorType.Arrow;
 
@@ -578,9 +587,19 @@ namespace RGeos.SlimScene.Controls
             isDoubleClick = true;
             base.OnMouseDoubleClick(e);
         }
-
+        DateTime LastMoustWheel = DateTime.MinValue;
         protected override void OnMouseWheel(MouseEventArgs e)
         {
+            //if (first == 0)
+            //{
+            //    LastMoustWheel = DateTime.Now;
+            //    first++;
+            //}
+            if (LastMoustWheel.AddSeconds(0.5) > DateTime.Now)
+            {
+                return;
+            }
+            LastMoustWheel = DateTime.Now;
             PerspectiveCamera mPersCamera = drawArgs.WorldCamera as PerspectiveCamera;
             mPersCamera.Zoom(e.Delta);
             base.OnMouseWheel(e);

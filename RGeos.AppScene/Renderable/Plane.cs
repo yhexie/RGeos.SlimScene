@@ -6,18 +6,21 @@ using RGeos.SlimScene.Core;
 using CustomVertex;
 using SlimDX;
 using SlimDX.Direct3D9;
+using System.Drawing;
 
 namespace RGeos.AppScene.Renderable
 {
     public class Plane : RenderableObject
     {
-        double Span;
-        int Num;
+        public double Span;
+        public int Num;
+        public Color RgColor { get; set; }
         public Plane(double span, int num, string name)
             : base(name)
         {
             Span = span;
             Num = num;
+            RgColor = Color.Silver;
         }
 
         public override void Initialize(DrawArgs drawArgs)
@@ -44,11 +47,11 @@ namespace RGeos.AppScene.Renderable
                 float y = (float)(-(lines - 1) * Span);
                 float x2 = (float)(-i * Span);
                 float y2 = (float)((lines - 1) * Span);
-                axisX[0].Position = new Vector3(x, 0, y);
+                axisX[0].Position = new Vector3(x, y, 0);
 
-                axisX[0].Color = System.Drawing.Color.Red.ToArgb();
-                axisX[1].Position = new Vector3(x2, 0, y2);
-                axisX[1].Color = System.Drawing.Color.Red.ToArgb();
+                axisX[0].Color = RgColor.ToArgb();
+                axisX[1].Position = new Vector3(x2, y2, 0);
+                axisX[1].Color = RgColor.ToArgb();
                 drawArgs.Device.DrawUserPrimitives(PrimitiveType.LineStrip, 1, axisX);
             }
             for (int i = 1; i < lines; i++)
@@ -58,11 +61,11 @@ namespace RGeos.AppScene.Renderable
                 float y = (float)(-(lines - 1) * Span);
                 float x2 = (float)(i * Span);
                 float y2 = (float)((lines - 1) * Span);
-                axisX[0].Position = new Vector3(x, 0, y);
+                axisX[0].Position = new Vector3(x, y, 0);
 
-                axisX[0].Color = System.Drawing.Color.Red.ToArgb();
-                axisX[1].Position = new Vector3(x2, 0, y2);
-                axisX[1].Color = System.Drawing.Color.Red.ToArgb();
+                axisX[0].Color = RgColor.ToArgb();
+                axisX[1].Position = new Vector3(x2, y2, 0);
+                axisX[1].Color = RgColor.ToArgb();
                 drawArgs.Device.DrawUserPrimitives(PrimitiveType.LineStrip, 1, axisX);
             }
             for (int i = 0; i < lines; i++)
@@ -72,11 +75,11 @@ namespace RGeos.AppScene.Renderable
                 float x = (float)(-(lines - 1) * Span);
                 float y2 = (float)(i * Span);
                 float x2 = (float)((lines - 1) * Span);
-                axisX[0].Position = new Vector3(x, 0, y);
+                axisX[0].Position = new Vector3(x, y, 0);
 
-                axisX[0].Color = System.Drawing.Color.Red.ToArgb();
-                axisX[1].Position = new Vector3(x2, 0, y2);
-                axisX[1].Color = System.Drawing.Color.Red.ToArgb();
+                axisX[0].Color = RgColor.ToArgb();
+                axisX[1].Position = new Vector3(x2, y2, 0);
+                axisX[1].Color = RgColor.ToArgb();
                 drawArgs.Device.DrawUserPrimitives(PrimitiveType.LineStrip, 1, axisX);
             }
             for (int i = 0; i < lines; i++)
@@ -86,11 +89,11 @@ namespace RGeos.AppScene.Renderable
                 float x = (float)(-(lines - 1) * Span);
                 float y2 = (float)(-i * Span);
                 float x2 = (float)((lines - 1) * Span);
-                axisX[0].Position = new Vector3(x, 0, y);
+                axisX[0].Position = new Vector3(x, y, 0);
 
-                axisX[0].Color = System.Drawing.Color.Red.ToArgb();
-                axisX[1].Position = new Vector3(x2, 0, y2);
-                axisX[1].Color = System.Drawing.Color.Red.ToArgb();
+                axisX[0].Color = RgColor.ToArgb();
+                axisX[1].Position = new Vector3(x2, y2, 0);
+                axisX[1].Color = RgColor.ToArgb();
                 drawArgs.Device.DrawUserPrimitives(PrimitiveType.LineStrip, 1, axisX);
             }
         }

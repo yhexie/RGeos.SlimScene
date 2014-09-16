@@ -11,3 +11,6 @@
 /RGeos.Terrain/obj
 
 /RGeos.FrameWork.MVC/obj
+
+/RGeos.Geometry/obj
+/RGeos.Geometry/bin

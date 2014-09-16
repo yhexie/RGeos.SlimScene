@@ -12,6 +12,7 @@ using RGeos.SlimScene.Core;
 using RGeos.SlimScene.Renderable;
 using SlimDX;
 using RGeos.Terrain;
+using RGeos.Geometry;
 
 namespace RGeos.AppScene
 {
@@ -35,7 +36,7 @@ namespace RGeos.AppScene
             treeView1.Nodes.Add(Root);
             mSceneControl.CurrentWorld.Scene.ItemAdded += new ItemAdded_Event(ItemAdded);
 
-            mSceneControl.DrawArgs.WorldCamera.Position = new SlimDX.Vector3(300.0f, 300.0f, -300.0f);
+            mSceneControl.DrawArgs.WorldCamera.Position = new SlimDX.Vector3(300.0f, 300.0f, 300.0f);
             RGeos.AppScene.Renderable.Plane plane = new RGeos.AppScene.Renderable.Plane(20, 50, "Grid");
             plane.IsOn = true;
             mSceneControl.CurrentWorld.RenderableObjects.ChildObjects.Add(plane);
@@ -207,6 +208,25 @@ namespace RGeos.AppScene
                 terrain.IsOn = true;
                 mSceneControl.CurrentWorld.RenderableObjects.ChildObjects.Add(terrain);
             }
+        }
+
+        private void tspDrawPolyline_Click(object sender, EventArgs e)
+        {
+            Point3d[] pts = new Point3d[5];
+            Point3d pt1 = new Point3d(0, 0, 0);
+            Point3d pt2 = new Point3d(0, 10, 8);
+            Point3d pt3 = new Point3d(0, 20, 5);
+            Point3d pt4 = new Point3d(0, 30, 4);
+            Point3d pt5 = new Point3d(0, 40, 2);
+            pts[0] = pt1;
+            pts[1] = pt2;
+            pts[2] = pt3;
+            pts[3] = pt4;
+            pts[4] = pt5;
+            RenderableLineString rend = new RenderableLineString("Hello", null, pts, Color.White);
+            rend.IsOn = true;
+            rend.RenderPriority = RenderPriority.Custom;
+            mSceneControl.CurrentWorld.RenderableObjects.ChildObjects.Add(rend);
         }
     }
 }

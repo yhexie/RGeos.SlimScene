@@ -67,8 +67,9 @@ namespace RGeos.SlimScene.Renderable
                 {
                     Vector3 pt = new Vector3();
                     pt.X = m_center.X + m_radius * (float)Math.Sin(i * theta) * (float)Math.Cos(j * alpha);
-                    pt.Y = m_center.Y + m_radius * (float)Math.Cos(i * theta);
-                    pt.Z = m_center.Z + m_radius * (float)Math.Sin(i * theta) * (float)Math.Sin(j * alpha);
+                    
+                    pt.Y = m_center.Z + m_radius * (float)Math.Sin(i * theta) * (float)Math.Sin(j * alpha);
+                    pt.Z = m_center.Y + m_radius * (float)Math.Cos(i * theta);
                     vertices[j + i * (m_stacks + 1)].Position = pt;
                     vertices[j + i * (m_stacks + 1)].Tu = (float)j / (m_stacks);
                     vertices[j + i * (m_stacks + 1)].Tv = (float)i / (m_slices);
