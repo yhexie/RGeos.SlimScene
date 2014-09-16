@@ -223,7 +223,7 @@ namespace RGeos.AppScene
             pts[2] = pt3;
             pts[3] = pt4;
             pts[4] = pt5;
-            RenderableLineString rend = new RenderableLineString("Hello", null, pts, Color.White);
+            RenderableLineString rend = new RenderableLineString("Hello", null, pts, Color.Pink);
             rend.IsOn = true;
             rend.RenderPriority = RenderPriority.Custom;
             mSceneControl.CurrentWorld.RenderableObjects.ChildObjects.Add(rend);
